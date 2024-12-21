@@ -5,12 +5,17 @@ on:
     - cron: '0 * * * *'  # هر ساعت
   workflow_dispatch:  # امکان اجرای دستی
 
+permissions:
+  contents: write  # اضافه کردن دسترسی نوشتن
+
 jobs:
   update-configs:
     runs-on: ubuntu-latest
     
     steps:
     - uses: actions/checkout@v3
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}  # استفاده از توکن گیت‌هاب
     
     - name: Set up Python
       uses: actions/setup-python@v4
@@ -27,7 +32,7 @@ jobs:
     
     - name: Commit and push if changed
       run: |
-        git config --global user.name 'GitHub Action'
-        git config --global user.email 'action@github.com'
+        git config --global user.name 'github-actions[bot]'
+        git config --global user.email 'github-actions[bot]@users.noreply.github.com'
         git add configs/wireguard_configs.txt
         git diff --quiet && git diff --staged --quiet || (git commit -m "Update WireGuard configs" && git push)
