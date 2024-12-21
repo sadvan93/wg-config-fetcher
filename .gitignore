@@ -20,14 +20,11 @@ var/
 .installed.cfg
 *.egg
 
-# Telethon session
 *.session
 *.session-journal
 
-# Environment variables
 .env
 
-# IDE
 .idea/
 .vscode/
 *.swp
